@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Анкета</title>
+</head>
+<body>
+    <header class="wrap">
+        <h1>Заполните Анкету</h1>
+    </header>
+    <div class="wrap">
+        <form class="wrap_form" action="/anket" method="POST">
+            <p class="text">Имя:</p><input type="text" name="name" />
+            <p class="text">Фамилия:</p> <input type="text" name="surname" />
+            <p class="text">Возраст:</p> <input type="number" name="age" />
+
+            <p class="text">Выберите ваш пол:</p>
+            <input type="radio" name="sex" value="men"/> мужчина
+            <input type="radio" name="sex" value="woman" /> женщина
+
+            <p class="text">Выберите проживаете в Украине:</p>
+            <input type="radio" name="country" value="yes"/> да
+            <input type="radio" name="country" value="no" /> нет
+            <p></p><input class="bottom" type="submit" />
+        </form>
+    </div>
+</body>
+</html>
