@@ -15,6 +15,7 @@ public class Student {
     private String surname;
 
     @ManyToOne
+    //JoinColumn это связь через вторичный клуч, указывает на первичный ключ объекта, что мы выбрали ниже
     @JoinColumn(name = "grop_id")
     private Group group;
 

@@ -57,6 +57,11 @@ public class Main {
 
             Query queryGr = em.createQuery("FROM Group");
 
+/*            //так же этим запросом можем получить количество студентов в группе,
+            // свзять делаем через group это вторичный клуч
+            Query queryTest = em.createQuery("SELECT COUNT(id) FROM Student GROUP BY group");
+            System.out.println(queryTest.getResultList());*/
+
             //Считанные данные с таблиц приводим в спосок
             List<Student> studentList = querySt.getResultList();
             List<Group> studentGrop = queryGr.getResultList();
