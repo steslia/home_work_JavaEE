@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Login", urlPatterns = {"/login"})
+@WebServlet(name = "Login", urlPatterns = "/login")
 
 public class LoginServlet extends HttpServlet {
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
+    private EntityManager em = emf.createEntityManager();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,13 +28,10 @@ public class LoginServlet extends HttpServlet {
         Currency currency = null;
         NumberCurrency[] numberCurrency = NumberCurrency.values();
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
-        EntityManager em = emf.createEntityManager();
-
         em.getTransaction().begin();
 
-        user = new User("Serg", "Teslay", "+380666170444");
-        User user1 = new User("Ann", "Ostapshyk", "+380999870888");
+        user = new User("admin","123","Serg", "Teslay", "+380666170444");
+        User user1 = new User("test","123","Ann", "Ostapshyk", "+380999870888");
 
         em.persist(user);
         em.persist(user1);
