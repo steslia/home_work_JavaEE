@@ -1,55 +1,77 @@
 package servlet;
 
-import database.Accounts;
-import database.Currency;
-import database.NumberCurrency;
-import database.User;
+import entity.Login;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/login")
 
 public class LoginServlet extends HttpServlet {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
-    private EntityManager em = emf.createEntityManager();
+    private Login loginCheck = new Login();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Accounts accounts;
-        User user;
-        Currency currency = null;
-        NumberCurrency[] numberCurrency = NumberCurrency.values();
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        boolean checkActivity = loginCheck.checkActivity(login, password);
 
-        em.getTransaction().begin();
+        if (checkActivity){
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user_login", login);
 
-        user = new User("admin","123","Serg", "Teslay", "+380666170444");
-        User user1 = new User("test","123","Ann", "Ostapshyk", "+380999870888");
-
-        em.persist(user);
-        em.persist(user1);
-
-        for (NumberCurrency number : numberCurrency){
-            currency = new Currency(number.getString());
-            em.persist(currency);
+            req.setAttribute("login", login);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profile.jsp");
+            dispatcher.forward(req, resp);
         }
 
-        accounts = new Accounts(user, currency, 341);
+        if (!checkActivity) {
+            req.setAttribute("check", checkActivity);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            dispatcher.forward(req, resp);
+        }
+    }
 
-        em.persist(accounts);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String logOut = req.getParameter("log");
+        HttpSession session = req.getSession(false);
 
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
+        if ("exit".equals(logOut) && (session != null))
+            session.removeAttribute("user_login");
 
         resp.sendRedirect("index.html");
     }
+
+//    private boolean checkActivity(String login, String password, EntityManager em){
+//        if (login.isEmpty())
+//            return false;
+//
+//        if (password.isEmpty())
+//            return false;
+//
+//        Query queryLogin = em.createQuery("SELECT login FROM User", String.class);
+//        Query queryPassword = em.createQuery("SELECT password FROM User", String.class);
+//
+//        List<String> loginList = queryLogin.getResultList();
+//        List<String> passwordList = queryPassword.getResultList();
+//        Map<String, String> mapUsers = new HashMap<>();
+//
+//        for (int i = 0; i < loginList.size(); i++){
+//            mapUsers.put(loginList.get(i), passwordList.get(i));
+//        }
+//
+//        for (Map.Entry entry : mapUsers.entrySet()){
+//            if (entry.getKey().equals(login) && entry.getValue().equals(password))
+//                return true;
+//        }
+//
+//        return false;
+//    }
 }
