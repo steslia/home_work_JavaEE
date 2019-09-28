@@ -1,6 +1,7 @@
 package servlet;
 
 import entity.Login;
+import entity.ThisUser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
     private Login loginCheck = new Login();
+    private ThisUser thisUser = ThisUser.ourInstance;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -23,6 +25,8 @@ public class LoginServlet extends HttpServlet {
         boolean checkActivity = loginCheck.checkActivity(login, password);
 
         if (checkActivity){
+            //
+            thisUser.setThisUser(login);
             HttpSession session = req.getSession(true);
             session.setAttribute("user_login", login);
 
@@ -49,29 +53,4 @@ public class LoginServlet extends HttpServlet {
         resp.sendRedirect("index.html");
     }
 
-//    private boolean checkActivity(String login, String password, EntityManager em){
-//        if (login.isEmpty())
-//            return false;
-//
-//        if (password.isEmpty())
-//            return false;
-//
-//        Query queryLogin = em.createQuery("SELECT login FROM User", String.class);
-//        Query queryPassword = em.createQuery("SELECT password FROM User", String.class);
-//
-//        List<String> loginList = queryLogin.getResultList();
-//        List<String> passwordList = queryPassword.getResultList();
-//        Map<String, String> mapUsers = new HashMap<>();
-//
-//        for (int i = 0; i < loginList.size(); i++){
-//            mapUsers.put(loginList.get(i), passwordList.get(i));
-//        }
-//
-//        for (Map.Entry entry : mapUsers.entrySet()){
-//            if (entry.getKey().equals(login) && entry.getValue().equals(password))
-//                return true;
-//        }
-//
-//        return false;
-//    }
 }

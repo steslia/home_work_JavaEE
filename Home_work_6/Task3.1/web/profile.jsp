@@ -14,7 +14,11 @@
 <body>
     <h1>Hi <c:out value="${login}"/></h1>
 
-    <p><a href="/currency">Show currency</a></p>
+    <p><a href="/currency">Показать курс валют</a></p>
+    <p><a href="/createAccount">Создать счет</a></p>
+    <p><a href="/showAccount">Посмотреть счета</a></p>
+    <p><a href="/replenishAccount">Пополнить счета</a></p>
+    <p><a href="/activity">Переводы</a></p>
     <p><a href="/login?log=exit">Exit</a></p>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package database;
 
 public enum NumberCurrency {
-    UAH("UAH"), USD("USD"), EUR("EUR"), RUB("RUB");
+    UAH("UAH"), USD("USD"), EUR("EUR"), RUB("RUR");
 
     private String string;
 

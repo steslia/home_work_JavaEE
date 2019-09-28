@@ -3,14 +3,11 @@ package entity;
 import database.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
 
 public class Register {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
-    private EntityManager em = emf.createEntityManager();
+    private EntityManager em = Em.getInstance().getEntityManager();
 
     public boolean checkLogin(String login, String password) {
 
@@ -43,8 +40,5 @@ public class Register {
         } catch (Exception e) {
             em.getTransaction().rollback();
         }
-
-        em.close();
-        emf.close();
     }
 }

@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JacksonParser {
-    public List<CurrencyRate> parseJackson(String url) throws IOException {
+    public List<CurrencyCursPrivateBank> parseJackson(String url) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        //Получаем массив элементов CurrencyRate, и передаем ссылку какой JSON считывать и откуда(в данном случ из сайта)
-        CurrencyRate[] currencyRate = objectMapper.readValue(new URL(url), CurrencyRate[].class);
+        //Получаем массив элементов CurrencyCursPrivateBank, и передаем ссылку какой JSON считывать и откуда(в данном случ из сайта)
+        CurrencyCursPrivateBank[] currencyCursPrivateBank = objectMapper.readValue(new URL(url), CurrencyCursPrivateBank[].class);
 
         //Использую стримы для сортировки и добавления в список
-        List<CurrencyRate> resultList = Arrays.stream(currencyRate)
+        List<CurrencyCursPrivateBank> resultList = Arrays.stream(currencyCursPrivateBank)
                 .filter(s -> !s.getFrom().equals("BTC"))
                 .collect(Collectors.toList());
 

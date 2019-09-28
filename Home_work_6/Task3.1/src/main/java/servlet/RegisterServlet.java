@@ -36,40 +36,4 @@ public class RegisterServlet extends HttpServlet {
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.jsp");
         dispatcher.forward(req, resp);
     }
-
-//    private boolean checkLogin(String login, String password,EntityManager em) {
-//
-//        if (login.isEmpty())
-//            return false;
-//
-//        if (password.isEmpty())
-//            return false;
-//
-//        boolean check = true;
-//
-//        Query query = em.createQuery("SELECT login FROM User", String.class);
-//
-//        List<String> loginList = query.getResultList();
-//
-//        for (String str : loginList) {
-//            if (str.equals(login))
-//                check = false;
-//        }
-//
-//        return check;
-//    }
-//
-//    private void addDB(User user) {
-//        em.getTransaction().begin();
-//
-//        try {
-//            em.persist(user);
-//            em.getTransaction().commit();
-//        } catch (Exception e) {
-//            em.getTransaction().rollback();
-//        }
-//
-//        em.close();
-//        emf.close();
-//    }
 }
