@@ -1,6 +1,7 @@
 package database;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "accounts")
@@ -51,5 +52,21 @@ public class Accounts {
 
     public void setMoney(double money) {
         this.money = money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Accounts accounts = (Accounts) o;
+        return id == accounts.id &&
+                Double.compare(accounts.money, money) == 0 &&
+                Objects.equals(user, accounts.user) &&
+                Objects.equals(currency, accounts.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, currency, money);
     }
 }

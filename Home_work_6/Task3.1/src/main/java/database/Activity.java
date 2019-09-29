@@ -1,6 +1,7 @@
 package database;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Activity {
@@ -9,7 +10,7 @@ public class Activity {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender_user")
+    @JoinColumn(name = "sender_account")
     private Accounts sender;
 
     @Column(name = "Money")
@@ -28,4 +29,27 @@ public class Activity {
         this.recipient = recipient;
     }
 
+    public double getMoney() {
+        return money;
+    }
+
+    public Accounts getRecipient() {
+        return recipient;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Activity activity = (Activity) o;
+        return id == activity.id &&
+                Double.compare(activity.money, money) == 0 &&
+                Objects.equals(sender, activity.sender) &&
+                Objects.equals(recipient, activity.recipient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, sender, money, recipient);
+    }
 }

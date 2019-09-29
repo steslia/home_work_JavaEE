@@ -9,6 +9,7 @@ import java.util.List;
 public class Register {
     private EntityManager em = Em.getInstance().getEntityManager();
 
+    //Проверка на регестрацию
     public boolean checkLogin(String login, String password) {
 
         if (login.isEmpty())

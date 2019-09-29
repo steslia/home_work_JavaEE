@@ -24,6 +24,10 @@ public class User {
     @Column(name="Phone")
     private String phone;
 
+    public String getLogin() {
+        return login;
+    }
+
     public User() {
     }
 

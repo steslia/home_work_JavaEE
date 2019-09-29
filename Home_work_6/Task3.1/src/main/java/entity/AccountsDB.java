@@ -28,6 +28,7 @@ public class AccountsDB {
         }
     }
 
+    //Обновление счета в БД
     public static boolean updateDatabase(Accounts accounts){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
         EntityManager em = emf.createEntityManager();
@@ -44,6 +45,7 @@ public class AccountsDB {
         }
     }
 
+    //Обновление двух счетов в БД в одной транзакции
     public static boolean updateDatabase(Accounts senderAccount, Accounts recipientAccount){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
         EntityManager em = emf.createEntityManager();
@@ -61,7 +63,7 @@ public class AccountsDB {
         }
     }
 
-    //Вернет список счетов пользователя
+    //Метод для возвращения списка счетов пользователя, принимает User
     public static List<Accounts> getListAccount(User user){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAMySQL");
         EntityManager em = emf.createEntityManager();

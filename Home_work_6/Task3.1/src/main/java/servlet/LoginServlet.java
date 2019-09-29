@@ -22,10 +22,11 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        //Проверяем совпадает логин и пароль с данными с бд, результать вносим в пересенную
         boolean checkActivity = loginCheck.checkActivity(login, password);
 
         if (checkActivity){
-            //
+            //добавляем пользователя который сейчас находится в программе
             thisUser.setThisUser(login);
             HttpSession session = req.getSession(true);
             session.setAttribute("user_login", login);

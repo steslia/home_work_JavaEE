@@ -35,7 +35,9 @@ public class CreateAccountServlet extends HttpServlet {
 
             if (!(currency == null)) {
                 double money = Double.parseDouble(moneyString);
+                //Получае данного пользователя, что в программе
                 User user = thisUser.getUser();
+                //Создание счета
                 Accounts accounts = new Accounts(user, currency, money);
                 check = AccountsDB.addDatabase(accounts);
             }

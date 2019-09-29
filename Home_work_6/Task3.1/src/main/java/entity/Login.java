@@ -9,6 +9,7 @@ import java.util.Map;
 public class Login {
     private EntityManager em = Em.getInstance().getEntityManager();
 
+    //Проверка вводимого логина
     public boolean checkActivity(String login, String password) {
 
         if (login.isEmpty())

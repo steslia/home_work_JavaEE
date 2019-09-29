@@ -14,7 +14,6 @@ public class ThisUser {
     private ThisUser(){
 
     }
-
     public void setThisUser(String login){
         Query query = em.createQuery("FROM User user WHERE user.login = :login");
         query.setParameter("login", login);
@@ -24,6 +23,7 @@ public class ThisUser {
         }
     }
 
+    //Получаем пользователя который залогинился
     public User getUser() {
         return user;
     }

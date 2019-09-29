@@ -25,8 +25,10 @@ public class ShowAccountServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Получаем список счетов у данного пользователя
         List<Accounts> accountsList = AccountsDB.getListAccount(user);
 
+        //Сортируем если индекс валюты совпадает тогда делаем ввывод по курсу гривны
         for (Accounts account : accountsList) {
 
             for (CursCurrency curs : cursCurrency) {

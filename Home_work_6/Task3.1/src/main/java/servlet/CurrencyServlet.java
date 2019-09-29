@@ -18,8 +18,10 @@ public class CurrencyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CurrencyDB curs = new CurrencyDB();
+        //Добавляем индексы валют и курс валют в БД
         boolean check = curs.add();
 
+        //Полученный список валют редиректим на страницу jsp для вывода
         if (check) {
             List<CursCurrency> listCurs = curs.getCursCurrencyInDB();
             req.setAttribute("listCurs", listCurs);

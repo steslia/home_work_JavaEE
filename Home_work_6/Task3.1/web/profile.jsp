@@ -19,6 +19,7 @@
     <p><a href="/showAccount">Посмотреть счета</a></p>
     <p><a href="/replenishAccount">Пополнить счета</a></p>
     <p><a href="/activity">Переводы</a></p>
+    <p><a href="/showActivity">История транзакций</a></p>
     <p><a href="/login?log=exit">Exit</a></p>
 </body>
 </html>

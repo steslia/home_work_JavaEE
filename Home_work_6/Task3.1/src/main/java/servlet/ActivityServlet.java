@@ -36,22 +36,26 @@ public class ActivityServlet extends HttpServlet {
             Long idRecipientAccount = Long.valueOf(strRecipientAccount);
             double money = Double.parseDouble(strMoney);
 
+            //получения счета по айди
             Accounts senderAccount = AccountsDB.getAccount(idSenderAccount);
             Accounts recipientAccount = AccountsDB.getAccount(idRecipientAccount);
 
+            //получение суммы денег с счетов
             double senderMoney = senderAccount.getMoney();
             double recipientMoney = recipientAccount.getMoney();
-
+            //Провекра чтобы с одного счета нельзя было одновреммено отправит на него же деньги
             if (senderAccount.getId() != recipientAccount.getId()) {
+                //Проверка на подходящую сумму денег с счета отправителя
                 if (senderMoney >= money) {
+                    //вычитание денег с счета отправителя
                     senderAccount.setMoney(senderMoney - money);
-
+                    //конвертация суммы по курсу
                     double calcMoney = calcMoney(senderAccount, recipientAccount, money);
-
+                    //пополнение счета получателя
                     recipientAccount.setMoney(recipientMoney + calcMoney);
-
+                    //обновления счетов получателя и отправителя в БД
                     check = AccountsDB.updateDatabase(senderAccount, recipientAccount);
-
+                    //добавление данной транзакции в БД
                     if (check) {
                         ActivityDB.addDatabase(new Activity(senderAccount, money, recipientAccount));
                     }
@@ -79,12 +83,11 @@ public class ActivityServlet extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
+    //Метод для привидение валюты к нужному курсу по индексу валют отправителя и получателя
     private double calcMoney(Accounts senderAccount, Accounts recipientAccount, double money) {
         double resultMoney = money;
         Currency senderCurrency = senderAccount.getCurrency();
         Currency recipientCurrency = recipientAccount.getCurrency();
-
-//        for (Currency currency : currencyList){
 
         if (senderCurrency.equals(recipientCurrency)) {
             return resultMoney;
@@ -93,7 +96,7 @@ public class ActivityServlet extends HttpServlet {
         if (senderCurrency.getName().equals("UAH")) {
             for (CursCurrency cursCurrency : cursCurrency) {
                 if (recipientAccount.getCurrency().equals(cursCurrency.getCurrency())) {
-                    money *= cursCurrency.getCurs();
+                    money /= cursCurrency.getCurs();
                     return money;
                 }
             }
@@ -120,11 +123,8 @@ public class ActivityServlet extends HttpServlet {
                     money /= cursCurrency.getCurs();
                 }
             }
-
             return money;
         }
-//        }
-
         return money;
     }
 }

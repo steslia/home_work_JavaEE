@@ -24,13 +24,15 @@ public class ReplenishAccountServlet extends HttpServlet {
         String idStr = req.getParameter("id");
         String moneyStr = req.getParameter("money");
 
+        //Проверка на непустые поля в форме
         if ( (!(idStr == null) && !(moneyStr == null)) && ( !idStr.isEmpty() ) && !moneyStr.isEmpty()){
 
             Long id = Long.valueOf(idStr);
             Double money = Double.valueOf(moneyStr);
 
+            //Получаем счет по айди, айди приходит с формы
             Accounts accounts = AccountsDB.getAccount(id);
-
+            //Устанавливаем новое значение денег, и обновляем объет в базе
             accounts.setMoney(accounts.getMoney() + money);
             check = AccountsDB.updateDatabase(accounts);
         }
@@ -44,6 +46,7 @@ public class ReplenishAccountServlet extends HttpServlet {
         dispatcher(req, resp);
     }
 
+    //Метод чтобы редиректить список счетов данного клиента на страниц jsp
     private void dispatcher(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Accounts> accountsList = AccountsDB.getListAccount(thisUser);
         req.setAttribute("accountsList", accountsList);

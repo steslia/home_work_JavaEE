@@ -19,8 +19,10 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        //Проверка на уникальность логина и наличие пароля в форме
         boolean check = register.checkLogin(login, password);
 
+        //Добавляем нового пользователя в БД
         if (check) {
             String name = req.getParameter("name");
             String surname = req.getParameter("surname");
