@@ -5,6 +5,7 @@ import ua.kiev.prog.model.Group;
 
 import java.util.List;
 
+//Это DAO набор методов для работы с одной тоблицой в БД
 public interface ContactDAO {
     void add(Contact contact);
     void delete(long[] ids);

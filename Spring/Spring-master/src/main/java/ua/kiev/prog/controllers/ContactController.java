@@ -14,6 +14,10 @@ import ua.kiev.prog.services.ContactService;
 
 import static ua.kiev.prog.controllers.GroupController.DEFAULT_GROUP_ID;
 
+//@Controller указывает что это взаимодействие с пользователем через наш сервис
+//Она производная от Component, автоматом создает объект, этого класа и кладет его в контекст
+//Такие классы можем дольше инжектить, без необходимости описывать их в конфиге
+//Взаимодействие с пользователем через наш сервис
 @Controller
 public class ContactController {
     private static final int ITEMS_PER_PAGE = 6;
@@ -22,6 +26,7 @@ public class ContactController {
     private ContactService contactService;
 
     @RequestMapping("/")
+    //required = false указывает что параметр не обязателен
     public String index(Model model, @RequestParam(required = false, defaultValue = "0") Integer page) {
         if (page < 0) page = 0;
 
@@ -69,6 +74,7 @@ public class ContactController {
         Contact contact = new Contact(group, name, surname, phone, email);
         contactService.addContact(contact);
 
+        //Это для того чтобы не льзя было обновлять страницу и постоянно было добавления в базу
         return "redirect:/";
     }
 }

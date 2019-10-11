@@ -10,10 +10,15 @@ import ua.kiev.prog.dao.GroupDAO;
 
 import java.util.List;
 
+//@Service указывает что это сервис, будет создан бин этого класса и добавят его в контекст
+//На уровне сервиса управляем транзациями, можно несолько DAO засовывать в одну транзакцию
+//Методы сервиса написаны через DAO методы
 @Service
 public class ContactServiceImpl implements ContactService {
+    //Инжектим наш DAO
     @Autowired
     private ContactDAO contactDAO;
+    //Инжектим наш DAO
     @Autowired
     private GroupDAO groupDAO;
 
@@ -27,12 +32,15 @@ public class ContactServiceImpl implements ContactService {
         groupDAO.add(group);
     }
 
-    @Transactional
+    //Транзакция указывает, что этот метод будет транзакцией, нам теперь не нужно ею управлять
+    //При возникновении исключения будет ролбэк, можем указать при каких исключения делать ролбэк
+    @Transactional(rollbackFor = RuntimeException.class)
     public void deleteContact(long[] ids) {
         contactDAO.delete(ids);
     }
 
     @Transactional(readOnly=true)
+    //readOnly=true указывает что розрешено ток чтение, этот метод не сможет изменить БД
     public List<Group> listGroups() {
         return groupDAO.list();
     }

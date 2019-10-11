@@ -4,6 +4,7 @@ import ua.kiev.prog.model.Group;
 
 import java.util.List;
 
+//Это DAO набор методов для работы с одной тоблицой в БД
 public interface GroupDAO {
     void add(Group group);
     void delete(Group group);

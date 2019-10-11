@@ -14,6 +14,10 @@ import ua.kiev.prog.model.Group;
 import ua.kiev.prog.services.ContactService;
 import ua.kiev.prog.services.ContactServiceImpl;
 
+//@Controller указывает что это взаимодействие с пользователем через наш сервис
+//Она производная от Component, автоматом создает объект, этого класа и кладет его в контекст
+//Такие классы можем дольше инжектить, без необходимости описывать их в конфиге
+//Взаимодействие с пользователем через наш сервис
 @Controller
 public class GroupController {
     static final int DEFAULT_GROUP_ID = -1;
@@ -27,12 +31,17 @@ public class GroupController {
     }
 
     @RequestMapping(value="/group/add", method = RequestMethod.POST)
+    //  @PathVariable обозначает что туда нужно передать параметр с POST запроса с вот таким именем
+    //  и он будет конвертирован в нужный нам тип
     public String groupAdd(@RequestParam String name) {
         contactService.addGroup(new Group(name));
         return "redirect:/"; // перенаправление в корень
     }
 
     @RequestMapping("/group/{id}")
+    // @PathVariable говорит что часть URL по этому пути нужно передать
+    // в этот метод(в нашем случаии id) по сути спринг врезает сюда конвертит в long
+    // и переедает в метод в виде long примитива
     public String listGroup(@PathVariable(value = "id") long groupId, Model model) {
         Group group = (groupId != DEFAULT_GROUP_ID) ? contactService.findGroup(groupId) : null;
 
